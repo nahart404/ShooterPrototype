@@ -7,13 +7,15 @@ public class Player : MonoBehaviour
 {
     //variables
     float moveSpeed = 10f;
-
     float xMin;
     float xMax;
     float yMin;
     float yMax;
     float shipPadding = 1f;
     float laserSpeed = 20f;
+    float projectileFirePeriod = .1f;
+
+    Coroutine firingCoroutine;
 
     //config
     [SerializeField] GameObject projectilePrefab;
@@ -23,6 +25,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         SetMoveBoundaries();
+        
     }
 
     // Update is called once per frame
@@ -38,9 +41,29 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Fire1")) //using ButtonDown instead of keydown b/c it refers to the user's input manager, making easier for the user to reconfig controls
         {//note: input manager for fire1 was changed to "space"
 
-            GameObject laser = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as GameObject;
+            //make it to where holding down space fires instead of constantly having to press/click
+            firingCoroutine = StartCoroutine(ContinuousFire());
+
+            //problem: getbuttondown only returns 1 true when the button is held down
+            //solution: add a while loop to the coroutine of "while true" and another if statement here 
+            //for when player releases button and stopping that coroutine
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            StopCoroutine(firingCoroutine);
+        }
+    }
+
+    IEnumerator ContinuousFire()
+    {
+        while (true)
+        {
+            GameObject laser = Instantiate(projectilePrefab, transform.position,
+                Quaternion.identity) as GameObject;
             //Quaternion.identity = "no rotation"
             laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+
+            yield return new WaitForSeconds(projectileFirePeriod);
         }
     }
 
