@@ -13,11 +13,35 @@ public class Player : MonoBehaviour
     float yMin;
     float yMax;
     float shipPadding = 1f;
+    float laserSpeed = 20f;
+
+    //config
+    [SerializeField] GameObject projectilePrefab;
+
 
     // Start is called before the first frame update
     void Start()
     {
         SetMoveBoundaries();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Move();
+        Fire();
+    }
+
+    //player can fire projectiles
+    private void Fire()
+    {
+        if (Input.GetButtonDown("Fire1")) //using ButtonDown instead of keydown b/c it refers to the user's input manager, making easier for the user to reconfig controls
+        {//note: input manager for fire1 was changed to "space"
+
+            GameObject laser = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as GameObject;
+            //Quaternion.identity = "no rotation"
+            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+        }
     }
 
     //method to control where the player can and can't go using the camera's viewport
@@ -30,13 +54,6 @@ public class Player : MonoBehaviour
         yMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + shipPadding; //min of y axis
         yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - shipPadding; //max of y axis 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Move();
-    }
-
     //method that helps move the player via key commands (wasd)
     private void Move()
     {
