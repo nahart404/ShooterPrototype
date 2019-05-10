@@ -368,6 +368,9 @@ MonoBehaviour:
   waveConfigs:
   - {fileID: 11400000, guid: cd2c1a2a31c009d4b86100ba464fe732, type: 2}
   - {fileID: 11400000, guid: 2e3ba2fe23cbf9f4b9300912be6a8cf2, type: 2}
+  - {fileID: 11400000, guid: ffb235c7191086b4ab4b967c8b1f480b, type: 2}
+  - {fileID: 11400000, guid: 2c6e7f4a31f92f54aae0048d0df0ee52, type: 2}
+  looping: 1
 --- !u!1001 &2733530560972385392
 PrefabInstance:
   m_ObjectHideFlags: 0

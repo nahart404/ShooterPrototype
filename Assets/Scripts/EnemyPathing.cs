@@ -6,8 +6,7 @@ public class EnemyPathing : MonoBehaviour
 {
     //config
     [SerializeField] List<Transform> waypoints;
-    [SerializeField] float moveSpeed = 10f;
-    [SerializeField] WaveConfig waveConfig;
+    WaveConfig waveConfig;
 
     //variables
     int wayPointIndex = 0;
@@ -30,6 +29,12 @@ public class EnemyPathing : MonoBehaviour
         MoveEnemy();
     }
 
+    //method used to help set/change the wave/path of the ship to have variety
+    public void SetWaveConfig(WaveConfig waveConfig)
+    {
+        //this instance (waveConfig in the class) equals the waveConfig in this method
+        this.waveConfig = waveConfig;
+    }
     private void MoveEnemy()
     {
         if (wayPointIndex <= waypoints.Count - 1) //if we haven't gone to the next waypoint yet,
@@ -37,7 +42,10 @@ public class EnemyPathing : MonoBehaviour
             //move towards the current waypoint
             //first get the position we need to move towards
             var targetPosition = waypoints[wayPointIndex].transform.position;
-            var movementPerFrame = moveSpeed * Time.deltaTime;
+            var movementPerFrame = waveConfig.GetMoveSpeed() * Time.deltaTime;
+            /*Cut out the extra variable "moveSpeed" and just referenced the class method that 
+             * had the speed to begin with
+             */
 
             //now the actual moving
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementPerFrame);
