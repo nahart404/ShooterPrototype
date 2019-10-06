@@ -111,6 +111,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  shotCounter: 0
+  minTimeBetweenShots: 0.2
+  maxTimeBetweenShots: 3
+  projectilePrefab: {fileID: 698750576975254718, guid: 7c15f66a960f2844c8a6bbc17477f057,
+    type: 3}
 --- !u!60 &4435629916505024845
 PolygonCollider2D:
   m_ObjectHideFlags: 0
