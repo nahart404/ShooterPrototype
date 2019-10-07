@@ -6,12 +6,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //variables
+    [Header("Player")] //creates a header in Unity incase we need to express what serialized fields do what
     float moveSpeed = 10f;
     float xMin;
     float xMax;
     float yMin;
     float yMax;
     float shipPadding = 1f;
+    [SerializeField] int health = 200;
+
+    [Header("Player Lasers")]
     float laserSpeed = 20f;
     float projectileFirePeriod = .1f;
 
@@ -91,6 +95,23 @@ public class Player : MonoBehaviour
         var newYPos = Mathf.Clamp(transform.position.y + deltaY, yMin, yMax);
 
         transform.position = new Vector2(newXPos, newYPos); //set new position
+    }
 
+    private void OnTriggerEnter2D(Collider2D other) //thing that bummed into enemy
+    {
+        //set dmgDealer to equal the laser (aka the "other")
+        DamageDealer dmgDealer = other.gameObject.GetComponent<DamageDealer>();
+        DealDamage(dmgDealer);
+    }
+
+    private void DealDamage(DamageDealer dmgDealer)
+    {
+        health -= dmgDealer.GetDamage(); //when hit,take away the health of the enemy
+
+        //if 0 health,
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
