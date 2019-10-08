@@ -50,12 +50,14 @@ public class Enemy : MonoBehaviour
     {
         //set dmgDealer to equal the laser (aka the "other")
         DamageDealer dmgDealer = other.gameObject.GetComponent<DamageDealer>();
+        if (!dmgDealer) { return; } //incase something unexpected happened
         DealDamage(dmgDealer);
     }
 
     private void DealDamage(DamageDealer dmgDealer)
     {
         health -= dmgDealer.GetDamage(); //when hit,take away the health of the enemy
+        dmgDealer.Hit(); //makes sure laser destroys itself
 
         //if 0 health,
         if (health <= 0)
