@@ -114,7 +114,10 @@ MonoBehaviour:
   shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3
+  explodeDuration: 0.2
   projectilePrefab: {fileID: 698750576975254718, guid: 7c15f66a960f2844c8a6bbc17477f057,
+    type: 3}
+  explodeVFX: {fileID: 1498888765001944504, guid: cb5fcfee7f51d3b47ae4fdd4850652df,
     type: 3}
 --- !u!60 &4435629916505024845
 PolygonCollider2D:

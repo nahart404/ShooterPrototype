@@ -9,9 +9,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] float minTimeBetweenShots = .2f;
     [SerializeField] float maxTimeBetweenShots = 3f;
     float laserSpeed = 20f;
+    [SerializeField] float explodeDuration = 1f;
 
     //config
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] GameObject explodeVFX;
 
     // Start is called before the first frame update
     void Start()
@@ -62,7 +64,17 @@ public class Enemy : MonoBehaviour
         //if 0 health,
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    //method for when the enemy dies(particle effects, deleting game objects)
+    private void Die()
+    {
+        Destroy(gameObject);
+        //Inst the particle effect for death
+        GameObject explosion = Instantiate(explodeVFX, transform.position, transform.rotation);
+        //then destory it (we only need it for a second)
+        Destroy(explosion, explodeDuration);
     }
 }
