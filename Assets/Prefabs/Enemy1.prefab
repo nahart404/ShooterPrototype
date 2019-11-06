@@ -119,6 +119,8 @@ MonoBehaviour:
     type: 3}
   explodeVFX: {fileID: 1498888765001944504, guid: cb5fcfee7f51d3b47ae4fdd4850652df,
     type: 3}
+  laserAudio: {fileID: 8300000, guid: ea95578da539dbb47865935d90699c35, type: 3}
+  deathAudio: {fileID: 8300000, guid: 2296f745887f51349a55e4ccf577ef46, type: 3}
 --- !u!60 &4435629916505024845
 PolygonCollider2D:
   m_ObjectHideFlags: 0

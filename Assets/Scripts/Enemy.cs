@@ -14,6 +14,10 @@ public class Enemy : MonoBehaviour
     //config
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject explodeVFX;
+    [SerializeField] AudioClip laserAudio;
+    [SerializeField] AudioClip deathAudio;
+    [SerializeField] [Range(0, 2)] float deathAudioVolume = 2f;
+    [SerializeField] float laserAudioVolume = .5f;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +50,9 @@ public class Enemy : MonoBehaviour
                 Quaternion.identity) as GameObject;
         //Quaternion.identity = "no rotation"
         laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -laserSpeed);
+        //play laser audio clip at laser position (might be an issue, if something happens, look here. 11/6/19)
+        //Instead, could use AudioSource.PlayClipAtPoint(laserAudio, Camera.main.transform.position, laserAudioVolume) for less "3D sounds from laser
+        AudioSource.PlayClipAtPoint(laserAudio, new Vector3(laser.transform.position.x, laser.transform.position.y), laserAudioVolume);
     }
 
     private void OnTriggerEnter2D(Collider2D other) //thing that bummed into enemy
@@ -76,5 +83,7 @@ public class Enemy : MonoBehaviour
         GameObject explosion = Instantiate(explodeVFX, transform.position, transform.rotation);
         //then destory it (we only need it for a second)
         Destroy(explosion, explodeDuration);
+        //play audio clip for death
+        AudioSource.PlayClipAtPoint(deathAudio, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y), deathAudioVolume);
     }
 }

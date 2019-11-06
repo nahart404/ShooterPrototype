@@ -96,6 +96,8 @@ MonoBehaviour:
   health: 200
   projectilePrefab: {fileID: 7594824047605217343, guid: a166e9f50c479344a9c6bfdff328b1e7,
     type: 3}
+  laserAudio: {fileID: 8300000, guid: e95e75381f9d5b749bedb124560e68c1, type: 3}
+  deathAudio: {fileID: 8300000, guid: 2296f745887f51349a55e4ccf577ef46, type: 3}
 --- !u!60 &3524069906316615184
 PolygonCollider2D:
   m_ObjectHideFlags: 0

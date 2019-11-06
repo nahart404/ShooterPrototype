@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
 
     //config
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] AudioClip laserAudio;
+    [SerializeField] AudioClip deathAudio;
+    [SerializeField] [Range(0, 2)] float deathAudioVolume = 2f;
+    [SerializeField] float laserAudioVolume = .5f;
 
 
     // Start is called before the first frame update
@@ -66,6 +70,9 @@ public class Player : MonoBehaviour
                 Quaternion.identity) as GameObject;
             //Quaternion.identity = "no rotation"
             laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+            //play laser audio clip at laser position (might be an issue, if something happens, look here. 11/6/19)
+            //Instead, could use AudioSource.PlayClipAtPoint(laserAudio, Camera.main.transform.position, laserAudioVolume) for less "3D sounds from laser
+            AudioSource.PlayClipAtPoint(laserAudio, new Vector3(laser.transform.position.x, laser.transform.position.y), laserAudioVolume);
 
             yield return new WaitForSeconds(projectileFirePeriod);
         }
@@ -114,6 +121,8 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            //play audio clip for death
+            AudioSource.PlayClipAtPoint(deathAudio, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y), deathAudioVolume);
         }
     }
 }
